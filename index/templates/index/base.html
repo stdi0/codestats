@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+        <head>
+            <title>CodeStats</title>
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+            <link rel="stylesheet" href="{% static 'css/codestats.css' %}">
+            <!--<link rel="stylesheet" href="{% static 'css/blog.css' %}">-->
+        </head>
+        <body>
+            <div class="page-header" style="text-align: center;">
+                <h1><a href="/index"><span class="glyphicon glyphicon-stats"></span> CodeStats</a></h1>
+            </div>
+
+            <div class="navigation">
+                <ul class="nav nav-pills nav-justified">
+                <li class="active"><a href='/index'>Моя статистика</a></li>
+                <li><a href="/top/day">Рейтинг</a></li>
+                <li><a href="/sign_up">Регистрация</a></li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                    {% block content %}
+                    {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <!--2017
+                <span class="label label-default">Beta</span>-->
+            </div>
+
+        </body>
+    </html>

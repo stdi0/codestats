@@ -1,0 +1,44 @@
+.navigation {
+	width: 400px;
+	margin: 0 auto;
+}
+
+.container {
+	width: 600px;
+	margin: 0 auto;
+}
+
+.counter {
+	width: 600px;
+	text-align: center;
+	padding: 25px;
+}
+
+.count {
+	font-size: 100px;
+}
+
+.position {
+	font-size: 50px;
+}
+
+.lead {
+	margin-bottom: 0px;
+}
+
+.form {
+	padding: 25px;
+}
+
+.footer {
+	text-align: center;
+}
+
+.rating {
+	width: 600px;
+	padding-top: 25px;
+}
+
+.pagination {
+}
+

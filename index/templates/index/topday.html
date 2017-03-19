@@ -1,0 +1,67 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+
+{% if result %}
+
+<div class="rating">
+<p class="lead">За сегодня</p>
+<table class="table table-striped">
+<thead>
+<tr>
+<td>
+<strong>№</strong>
+</td>
+<td>
+<strong>Пользователь</strong>
+</td>
+<td>
+<a href="/top/day"><strong>Сегодня (символов)</strong></a>
+</td>
+<td>
+<a href="/top/all"><strong>За все время (символов)</strong></a>
+</td>
+</tr>
+</thead>
+<tbody>
+{% for counter in result %}
+<tr>
+<td>
+{{ forloop.counter }}
+</td>
+<td>
+<a href="/index/{{ counter.user.username }}">{{ counter.user.username }}</a>
+</td>
+<td>
+{{ counter.counter_for_day }}
+</td>
+<td>
+{{ counter.counter_for_all_time }}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if result.has_previous %}
+            <a href="?page={{ result.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ result.number }} of {{ result.paginator.num_pages }}.
+        </span>
+
+        {% if result.has_next %}
+            <a href="?page={{ result.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+
+{% else %}
+<p>404 - page not found.</p>
+{% endif %}
+
+{% endblock content %}

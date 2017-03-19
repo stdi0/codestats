@@ -1,0 +1,23 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+
+<div class="form">
+
+<form method="post" action="{% url 'sign_up' %}">
+{% csrf_token %}
+<p>{{ form.username.label_tag }}</p>
+<p>{{ form.username }}</p>
+<p>{{ form.username.help_text }}</p>
+<p>{{ form.password1.label_tag }}</p>
+<p>{{ form.password1 }}</p>
+<p>{{ form.password2.label_tag }}</p>
+<p>{{ form.password2 }}</p>
+<p>{{ form.password2.help_text }}</p>
+<br>
+<input type="submit" value="Зарегистрироваться" />
+</form>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+
+{% if result %}
+
+<div class="rating">
+<p class="lead">За сегодня</p>
+<table class="table table-striped">
+<thead>
+<tr>
+<td>
+<strong>№</strong>
+</td>
+<td>
+<strong>Пользователь</strong>
+</td>
+<td>
+<a href="/top/day"><strong>Сегодня (символов)</strong></a>
+</td>
+<td>
+<a href="/top/alltime"><strong>За все время (символов)</strong></a>
+</td>
+</tr>
+</thead>
+<tbody>
+{% for counter in result %}
+<tr>
+<td>
+{{ forloop.counter }}
+</td>
+<td>
+{{ counter.user.username }}
+</td>
+<td>
+{{ counter.counter_for_day }}
+</td>
+<td>
+{{ counter.counter_for_all_time }}
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+{% else %}
+<p>404 - page not found.</p>
+{% endif %}
+
+{% endblock content %}

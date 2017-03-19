@@ -1,0 +1,21 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+
+{% if counter %}
+
+<div class="counter">
+<p class="lead"><span class="glyphicon glyphicon-flash"></span> <a href='/index/{{ counter.user.username }}'>{{ counter.user.username }}</a>, сегодня Вы вввели символов:</p>
+<p class="count">{{ counter.counter_for_day }}</p>
+<p class="lead"><span class="glyphicon glyphicon-time"></span> За все время:</p>
+<p class="count">{{ counter.counter_for_all_time }}</p>
+<p class="lead"><span class="glyphicon glyphicon-th-list"></span> Позиция в рейтинге за сегодня:</p>
+<p class="position">{{ rating_day }}</p>
+<p class="lead"><span class="glyphicon glyphicon-th-list"></span> Позиция в рейтинге за все время:</p>
+<p class="position">{{ rating_alltime }}</p>
+</div>
+{% else %}
+<p>404 - page not found.</p>
+{% endif %}
+
+{% endblock content %}
