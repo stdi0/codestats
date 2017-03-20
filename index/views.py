@@ -115,7 +115,7 @@ def sign_up(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user.counter_set.create(counter_for_day=50)
+            user.counter_set.create()
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
             login(request, user)
             return HttpResponseRedirect(reverse('index:counter', args=[user.username]))

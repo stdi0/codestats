@@ -4,7 +4,7 @@
 
 <div class="navigation">
 <ul class="nav nav-pills nav-justified">
-<li><a href='/index'>Моя статистика</a></li>
+<li><a href='/'>Моя статистика</a></li>
 <li class="active"><a href="/top/day">Рейтинг</a></li>
 <li><a href="/sign_up">Регистрация</a></li>
 </ul>
@@ -42,7 +42,7 @@
 {{ counter.pos }}
 </td>
 <td>
-<a href="/index/{{ counter.user.username }}">{{ counter.user.username }}</a>
+<a href="/{{ counter.user.username }}">{{ counter.user.username }}</a>
 </td>
 <td>
 {{ counter.counter_for_day }}
