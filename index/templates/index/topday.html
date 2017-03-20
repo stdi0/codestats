@@ -2,6 +2,18 @@
 
 {% block content %}
 
+<div class="navigation">
+<ul class="nav nav-pills nav-justified">
+<li><a href='/index'>Моя статистика</a></li>
+<li class="active"><a href="/top/day">Рейтинг</a></li>
+<li><a href="/sign_up">Регистрация</a></li>
+</ul>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+
 {% if result %}
 
 <div class="rating">
@@ -27,7 +39,7 @@
 {% for counter in result %}
 <tr>
 <td>
-{{ forloop.counter }}
+{{ counter.pos }}
 </td>
 <td>
 <a href="/index/{{ counter.user.username }}">{{ counter.user.username }}</a>
@@ -63,5 +75,9 @@
 {% else %}
 <p>404 - page not found.</p>
 {% endif %}
+
+</div>
+</div>
+</div>
 
 {% endblock content %}

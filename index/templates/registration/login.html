@@ -2,6 +2,18 @@
 
 {% block content %}
 
+<div class="navigation">
+<ul class="nav nav-pills nav-justified">
+<li class="active"><a href='/index'>Моя статистика</a></li>
+<li><a href="/top/day">Рейтинг</a></li>
+<li><a href="/sign_up">Регистрация</a></li>
+</ul>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+
 <div class="form">
 
 {% if form.errors %}
@@ -23,6 +35,10 @@
 <input type="hidden" name="next" value='/index' />
 </form>
 
+</div>
+
+</div>
+</div>
 </div>
 
 {% endblock content %}

@@ -35,6 +35,7 @@ def counter(request, user_name):
 
     #Figure out position in rating
     result = Counter.objects.all().order_by('-counter_for_day')
+
     for n, count in enumerate(result):
         if count.user.username == user_name:
             rating_day = n + 1
@@ -52,6 +53,11 @@ def counter(request, user_name):
 def topday(request):
     try:
         result = Counter.objects.all().order_by('-counter_for_day')
+        
+        #Update rating
+        for pos, count in enumerate(result):
+            count.pos = pos + 1
+
         paginator = Paginator(result, 10)
         page = request.GET.get('page')
         try:
@@ -69,6 +75,11 @@ def topday(request):
 def topall(request):
     try:
         result = Counter.objects.all().order_by('-counter_for_all_time')
+        
+        #Update rating 
+        for pos, count in enumerate(result):
+            count.pos = pos + 1
+        
         paginator = Paginator(result, 10)
         page = request.GET.get('page')
         try:

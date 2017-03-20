@@ -2,6 +2,18 @@
 
 {% block content %}
 
+<div class="navigation">
+<ul class="nav nav-pills nav-justified">
+<li><a href='/index'>Моя статистика</a></li>
+<li><a href="/top/day">Рейтинг</a></li>
+<li class="active"><a href="/sign_up">Регистрация</a></li>
+</ul>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+
 <div class="form">
 
 <form method="post" action="{% url 'sign_up' %}">
@@ -18,6 +30,10 @@
 <input type="submit" value="Зарегистрироваться" />
 </form>
 
+</div>
+
+</div>
+</div>
 </div>
 
 {% endblock content %}
