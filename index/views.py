@@ -23,7 +23,7 @@ def index(request):
             if count.user.username == request.user.username:
                 rating_alltime = n + 1
                 break;
-        
+
         counter = get_object_or_404(Counter, user__username=request.user.username)
         context = {'counter': counter, 'rating_day': rating_day, 'rating_alltime': rating_alltime}
         return render(request, 'index/mycounter.html', context)
@@ -50,28 +50,35 @@ def counter(request, user_name):
     return render(request, 'index/counter.html', context)
 
 def topday(request):
-    result = Counter.objects.all().order_by('-counter_for_day')
-    paginator = Paginator(result, 10)
-    page = request.GET.get('page')
     try:
-        result = paginator.page(page)
-    except PageNotAnInteger:
-        result = paginator.page(1)
-    except EmptyPage:
-        result = paginator.page(paginator.num_pages)
+        result = Counter.objects.all().order_by('-counter_for_day')
+        paginator = Paginator(result, 10)
+        page = request.GET.get('page')
+        try:
+            result = paginator.page(page)
+        except PageNotAnInteger:
+            result = paginator.page(1)
+        except EmptyPage:
+            result = paginator.page(paginator.num_pages)
+    except:
+        pass
     context = {'result': result}
     return render(request, 'index/topday.html', context)
 
+
 def topall(request):
-    result = Counter.objects.all().order_by('-counter_for_all_time')
-    paginator = Paginator(result, 10)
-    page = request.GET.get('page')
     try:
-        result = paginator.page(page)
-    except PageNotAnInteger:
-        result = paginator.page(1)
-    except EmptyPage:
-        result = paginator.page(paginator.num_pages)
+        result = Counter.objects.all().order_by('-counter_for_all_time')
+        paginator = Paginator(result, 10)
+        page = request.GET.get('page')
+        try:
+            result = paginator.page(page)
+        except PageNotAnInteger:
+            result = paginator.page(1)
+        except EmptyPage:
+            result = paginator.page(paginator.num_pages)
+    except:
+        pass
     context = {'result': result}
     return render(request, 'index/topall.html', context)
 
