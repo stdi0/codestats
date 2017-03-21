@@ -95,16 +95,19 @@ def topall(request):
 
 @csrf_exempt
 def api_call(request, user_name):
-    counter = get_object_or_404(Counter, user__username=user_name)
     try:
-        print('POST: ' + request.POST['count'])
+        counter = get_object_or_404(Counter, user__username=user_name, user__password1=request.POST['password'])
+    except:
+        pass
+    try:
+        #print('POST: ' + request.POST['count'])
         counter.counter_for_day += int(request.POST['count'])
         counter.counter_for_all_time += int(request.POST['count'])
        # print(counter.counter_for_day)
         counter.save()
     except KeyError:
         pass
-    return HttpResponseRedirect(reverse('index:index'))
+    return HttpResponseRedirect(reverse('index'))
 
 def sign_up(request):
     errors = []
@@ -118,7 +121,7 @@ def sign_up(request):
             user.counter_set.create()
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
             login(request, user)
-            return HttpResponseRedirect(reverse('index:counter', args=[user.username]))
+            return HttpResponseRedirect(reverse('counter', args=[user.username]))
     return render(request, 'registration/sign_up.html', {'errors': errors, 'form': form})
 
 def new_day():

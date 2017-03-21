@@ -20,11 +20,15 @@ from django.contrib.auth import views as auth_views
 from index import views
 
 urlpatterns = [
-    url(r'^', include('index.urls')),
+    #url(r'^', include('index.urls')),
     url(r'^', include('django.contrib.auth.urls')),
     #url(r'^login/$', auth_views.login, name='login'),
     url(r'^sign_up/$', views.sign_up, name='sign_up'),
     url(r'^top/day$', views.topday, name='topday'),
     url(r'^top/all$', views.topall, name='topall'),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index, name='index'),
+    url(r'^(?P<user_name>[a-zA-Z]+)/api_call/$', views.api_call, name='api_call'),
+    url(r'^(?P<user_name>[a-zA-Z]+)/$', views.counter, name='counter'),
+    
 ]
