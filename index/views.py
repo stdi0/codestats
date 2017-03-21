@@ -30,9 +30,7 @@ def index(request):
     return HttpResponseRedirect(reverse('login'))
 
 def counter(request, user_name):
-    #if request.user == 'AnonymousUser':
-    #    return HttpResponseRedirect(reverse('login'))
-
+    
     #Figure out position in rating
     result = Counter.objects.all().order_by('-counter_for_day')
 
@@ -95,26 +93,21 @@ def topall(request):
 
 @csrf_exempt
 def api_call(request, user_name):
-    try:
-        counter = get_object_or_404(Counter, user__username=user_name, user__password1=request.POST['password'])
-    except:
-        pass
-    try:
-        #print('POST: ' + request.POST['count'])
-        counter.counter_for_day += int(request.POST['count'])
-        counter.counter_for_all_time += int(request.POST['count'])
-       # print(counter.counter_for_day)
-        counter.save()
-    except KeyError:
-        pass
+    user = authenticate(username=user_name, password=request.POST['password'])
+    if user is not None:
+        counter = get_object_or_404(Counter, user__username=user_name)
+        try:
+            counter.counter_for_day += int(request.POST['count'])
+            counter.counter_for_all_time += int(request.POST['count'])
+            counter.save()
+        except:
+            pass
     return HttpResponseRedirect(reverse('index'))
 
 def sign_up(request):
     errors = []
-    #form = RegisterForm()
     form = UserCreationForm()
     if request.POST:
-        #form = RegisterForm(request.POST)
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
@@ -127,7 +120,6 @@ def sign_up(request):
 def new_day():
     result = Counter.objects.all()
     for counter in result:
-        #counter.counter_for_all_time += counter.counter_for_day
         counter.counter_for_day = 0
         counter.save()
 
