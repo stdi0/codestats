@@ -17,6 +17,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
+from django.conf import settings
+from django.conf.urls import patterns
+from django.conf.urls.static import static
+
 from index import views
 
 urlpatterns = [
@@ -24,6 +28,8 @@ urlpatterns = [
     url(r'^', include('django.contrib.auth.urls')),
     #url(r'^login/$', auth_views.login, name='login'),
     url(r'^sign_up/$', views.sign_up, name='sign_up'),
+    url(r'^login_with_github/$', views.login_with_github, name='login_with_github'),
+    url(r'^callback/$', views.callback, name='callback'),
     url(r'^top/day$', views.topday, name='topday'),
     url(r'^top/all$', views.topall, name='topall'),
     url(r'^admin/', admin.site.urls),
@@ -31,4 +37,9 @@ urlpatterns = [
     url(r'^(?P<user_name>[a-zA-Z]+)/api_call/$', views.api_call, name='api_call'),
     url(r'^(?P<user_name>[a-zA-Z]+)/$', views.counter, name='counter'),
     
-]
+] 
+
+urlpatterns += patterns('',
+    (r'image/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_DOC_ROOT }),
+ )

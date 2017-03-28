@@ -124,5 +124,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/codestats/codestats/index/static'
+STATIC_ROOT = BASE_DIR + '/static/'
+
+#MEDIA_ROOT = BASE_DIR + '/media/'
+#MEDIA_URL = '/media/'
+STATIC_DOC_ROOT = BASE_DIR + '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
