@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^top/all$', views.topall, name='topall'),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<user_name>[a-zA-Z]+)/api_call/$', views.api_call, name='api_call'),
-    url(r'^(?P<user_name>[a-zA-Z]+)/$', views.counter, name='counter'),
-    
+    url(r'^(?P<user_name>\d*[a-zA-Z]+\d*)/api_call/$', views.api_call, name='api_call'),
+    url(r'^(?P<user_name>\d*[a-zA-Z]+\d*)/$', views.counter, name='counter'),
+
 ]
