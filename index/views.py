@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
+import urllib.request
+import urllib.parse
 
 from .models import Counter
 
@@ -122,6 +124,30 @@ def new_day():
     for counter in result:
         counter.counter_for_day = 0
         counter.save()
+
+def login_with_github(request):
+    client_id = 'c23c344c20e7ca5f6b61'
+    client_secret = '773f43356a7f3368a008a8aa91e65b12f55a682d'
+    authorization_base_url = 'https://github.com/login/oauth/authorize'
+    token_url = 'https://github.com/login/oauth/access_token'
+
+    authorization_url = authorization_base_url + '/?client_id=' + client_id
+    return HttpResponseRedirect(authorization_url)
+
+def callback(request):
+    try:
+        data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
+        request = urllib.request.Request(token_url, data=data)
+        resp = urllib.request.urlopen(request)
+        print(resp)
+    except:
+        pass
+    return HttpResponseRedirect(reverse('index'))
+
+
+
+
+
 
 
 

@@ -1,5 +1,7 @@
 {% extends 'index/base.html' %}
 
+{% load staticfiles %}
+
 {% block content %}
 
 <div class="navigation">
@@ -20,6 +22,9 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+<!--<p><a href="/login_with_github"><img src="/image/github.ico"><span style="padding-left: 5px;">Войти через Github<span></a></p>
+<br>-->
+
 <form method="post" action="/login/">
 {% csrf_token %}
 <div>
@@ -34,6 +39,7 @@
 <input type="submit" value="Войти" />
 <input type="hidden" name="next" value='/' />
 </form>
+
 
 </div>
 
