@@ -36,11 +36,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^(?P<user_name>\d*[a-zA-Z]+\d*)/api_call/$', views.api_call, name='api_call'),
     url(r'^(?P<user_name>\d*[a-zA-Z]+\d*)/$', views.counter, name='counter'),
-
-]
-
-urlpatterns += patterns('',
-    (r'image/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': settings.STATIC_DOC_ROOT }),
- )
-
+    url(r'image/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_DOC_ROOT }),
+] 
