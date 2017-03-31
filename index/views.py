@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
+from django.db import IntegrityError
 
 from datetime import datetime
 import urllib.request
@@ -163,7 +164,7 @@ def callback(request):
         u.set_password('password')
         u.save()
         u.counter_set.create()
-    except:
+    except IntegrityError:
         context = {'errors': 'This user already exists.'}
         return render(request, 'registration/sign_up.html', context)
 
