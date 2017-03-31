@@ -170,7 +170,7 @@ def callback(request):
 
     #except:
     #    pass
-    return HttpResponseRedirect('change_password')
+    return HttpResponseRedirect(reverse('change_password'))
 
 def change_password(request):
     if request.user.is_authenticated():
