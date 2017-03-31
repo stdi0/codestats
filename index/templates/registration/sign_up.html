@@ -24,6 +24,9 @@
   </ul>
 {% endif %}
 
+<p><a href="/login_with_github"><img src="/image/github.ico"><span style="padding-left: 5px;">Войти через Github<span></a></p>
+<br>
+
 <form method="post" action="{% url 'sign_up' %}">
 {% csrf_token %}
 <p>{{ form.username.label_tag }}</p>
