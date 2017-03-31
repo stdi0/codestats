@@ -145,9 +145,11 @@ def callback(request):
     string = resp.read().decode('utf-8')
     json_obj = json.loads(string)
 
+    resp = urllib.request.urlopen('https://api.github.com/user?access_token=' + json_obj['access_token'])
+
     #except:
     #    pass
-    return HttpResponseRedirect('https://api.github.com/user?access_token=' + json_obj['access_token'])
+    return HttpResponse(resp.read())
 
 
 
