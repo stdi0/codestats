@@ -18,10 +18,10 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 from django.conf import settings
-from django.conf.urls import patterns
 from django.conf.urls.static import static
 
 from index import views
+from django.views.static import serve
 
 urlpatterns = [
     #url(r'^', include('index.urls')),
@@ -34,12 +34,7 @@ urlpatterns = [
     url(r'^top/all$', views.topall, name='topall'),
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<user_name>[a-zA-Z]+)/api_call/$', views.api_call, name='api_call'),
-    url(r'^(?P<user_name>[a-zA-Z]+)/$', views.counter, name='counter'),
-    url(r'image/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_DOC_ROOT }),
-] 
-
-#urlpatterns += patterns('',
-#    (r'image/(?P<path>.*)$', 'django.views.static.serve',
-#       {'document_root': settings.STATIC_DOC_ROOT }),
-# )
+    url(r'^(?P<user_name>\d*[a-zA-Z]+\d*)/api_call/$', views.api_call, name='api_call'),
+    url(r'^(?P<user_name>\d*[a-zA-Z]+\d*)/$', views.counter, name='counter'),
+    url(r'image/(?P<path>.*)$', serve, {'document_root': settings.STATIC_DOC_ROOT }),
+]

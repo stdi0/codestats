@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
 import urllib.request
 import urllib.parse
+import json
 
 from .models import Counter
 
@@ -32,7 +33,7 @@ def index(request):
     return HttpResponseRedirect(reverse('login'))
 
 def counter(request, user_name):
-    
+
     #Figure out position in rating
     result = Counter.objects.all().order_by('-counter_for_day')
 
@@ -53,7 +54,7 @@ def counter(request, user_name):
 def topday(request):
     try:
         result = Counter.objects.all().order_by('-counter_for_day')
-        
+
         #Update rating
         for pos, count in enumerate(result):
             count.pos = pos + 1
@@ -75,11 +76,11 @@ def topday(request):
 def topall(request):
     try:
         result = Counter.objects.all().order_by('-counter_for_all_time')
-        
-        #Update rating 
+
+        #Update rating
         for pos, count in enumerate(result):
             count.pos = pos + 1
-        
+
         paginator = Paginator(result, 10)
         page = request.GET.get('page')
         try:
@@ -125,24 +126,28 @@ def new_day():
         counter.counter_for_day = 0
         counter.save()
 
-def login_with_github(request):
-    print('CALL')
-    client_id = 'c23c344c20e7ca5f6b61'
-    client_secret = '773f43356a7f3368a008a8aa91e65b12f55a682d'
-    authorization_base_url = 'https://github.com/login/oauth/authorize'
-    token_url = 'https://github.com/login/oauth/access_token'
+client_id = 'c23c344c20e7ca5f6b61'
+client_secret = '773f43356a7f3368a008a8aa91e65b12f55a682d'
+authorization_base_url = 'https://github.com/login/oauth/authorize'
+token_url = 'https://github.com/login/oauth/access_token'
 
+def login_with_github(request):
     authorization_url = authorization_base_url + '/?client_id=' + client_id
     return HttpResponseRedirect(authorization_url)
 
 def callback(request):
-    try:
-        data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
-        request = urllib.request.Request(token_url, data=data)
-        resp = urllib.request.urlopen(request)     
-    except:
-        pass
-    return HttpResponseRedirect('https://api.github.com/user?access_token=' + resp[access_token])
+    #try:
+    data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
+    request = urllib.request.Request(token_url, data=data, headers={
+        'Accept': 'application/json'
+    })
+    resp = urllib.request.urlopen(request)
+    string = resp.read().decode('utf-8')
+    json_obj = json.loads(string)
+
+    #except:
+    #    pass
+    return HttpResponseRedirect('https://api.github.com/user?access_token=' + json_obj['access_token'])
 
 
 
