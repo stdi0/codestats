@@ -126,6 +126,7 @@ def new_day():
         counter.save()
 
 def login_with_github(request):
+    print('CALL')
     client_id = 'c23c344c20e7ca5f6b61'
     client_secret = '773f43356a7f3368a008a8aa91e65b12f55a682d'
     authorization_base_url = 'https://github.com/login/oauth/authorize'
@@ -138,11 +139,10 @@ def callback(request):
     try:
         data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
         request = urllib.request.Request(token_url, data=data)
-        resp = urllib.request.urlopen(request)
-        print(resp)
+        resp = urllib.request.urlopen(request)     
     except:
         pass
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect('https://api.github.com/user?access_token=' + resp[access_token])
 
 
 
