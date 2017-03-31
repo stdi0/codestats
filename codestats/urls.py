@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^sign_up/$', views.sign_up, name='sign_up'),
     url(r'^login_with_github/$', views.login_with_github, name='login_with_github'),
     url(r'^callback/$', views.callback, name='callback'),
+    url(r'^password/$', views.change_password, name='change_password'),
     url(r'^top/day$', views.topday, name='topday'),
     url(r'^top/all$', views.topall, name='topall'),
     url(r'^admin/', admin.site.urls),

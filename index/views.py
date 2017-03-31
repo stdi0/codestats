@@ -6,6 +6,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+
 from datetime import datetime
 import urllib.request
 import urllib.parse
@@ -152,13 +158,36 @@ def callback(request):
 
     #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
     #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
-    u = User(username='denisdenis2')
-    u.set_password('joo0shaij')
-    u.save()
-    u.counter_set.create()
+    try:
+        u = User(username=json_obj['login'])
+        u.set_password('password')
+        u.save()
+        u.counter_set.create()
+    except:
+        context = {'errors': 'This user already exists.'}
+        return render(request, 'registration/sign_up.html', context)
+
     #except:
     #    pass
-    return HttpResponse(json_obj['login'])
+    return HttpResponseRedirect('change_password')
+
+def change_password(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST':
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)  # Important!
+                messages.success(request, 'Your password was successfully updated!')
+                return redirect('index')
+            else:
+                messages.error(request, 'Please correct the error below.')
+        else:
+            form = PasswordChangeForm(request.user)
+        return render(request, 'registration/change_password.html', {
+            'form': form
+        })
+    return HttpResponseRedirect(reverse('login'))
 
 
 

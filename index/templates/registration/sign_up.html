@@ -16,6 +16,14 @@
 
 <div class="form">
 
+{% if errors %}
+  <ul class="messages">
+    {% for error in errors %}
+      <li class="{{ error.tags }}">{{ error }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
 <form method="post" action="{% url 'sign_up' %}">
 {% csrf_token %}
 <p>{{ form.username.label_tag }}</p>
