@@ -149,8 +149,8 @@ def callback(request):
     string = resp.read().decode('utf-8')
     json_obj = json.loads(string)
 
-    data = urllib.parse.urlencode({'username': json_obj['login'], 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
-    request = urllib.request.Request('/sign_up', data=data)
+    data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
+    request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
     #except:
     #    pass
     return HttpResponse(json_obj['login'])
