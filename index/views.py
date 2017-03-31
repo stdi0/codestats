@@ -148,6 +148,9 @@ def callback(request):
     resp = urllib.request.urlopen('https://api.github.com/user?access_token=' + json_obj['access_token'])
     string = resp.read().decode('utf-8')
     json_obj = json.loads(string)
+
+    data = urllib.parse.urlencode({'username': json_obj['login'], 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
+    request = urllib.request.Request('/sign_up', data=data)
     #except:
     #    pass
     return HttpResponse(json_obj['login'])
