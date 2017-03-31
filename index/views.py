@@ -165,9 +165,8 @@ def callback(request):
         u.save()
         u.counter_set.create()
     except IntegrityError:
-        context = {'errors': 'This user already exists.'}
         #return render(request, 'registration/sign_up.html', context)
-        return HttpResponseRedirect(reverse('sign_up', kwargs={'errors': error}))
+        return HttpResponseRedirect(reverse('sign_up', kwargs={'errors': 'This user already exists.'}))
 
     #except:
     #    pass
