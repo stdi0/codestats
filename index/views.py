@@ -152,7 +152,7 @@ def callback(request):
 
     #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
     #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
-    u = User(username='denisdenis')
+    u = User(username='denisdenis2')
     u.set_password('joo0shaij')
     u.save()
     u.counter_set.create()
