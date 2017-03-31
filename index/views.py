@@ -153,8 +153,8 @@ def callback(request):
     #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
     #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
     u = User(username="test12345", password="joo0shaij")
-    u.counter_set.create()
     u.save()
+    u.counter_set.create()
     #except:
     #    pass
     return HttpResponse(json_obj['login'])
