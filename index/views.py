@@ -146,10 +146,10 @@ def login_with_github(request):
 def callback(request):
     #try:
     data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
-    request = urllib.request.Request(token_url, data=data, headers={
+    assembled_request = urllib.request.Request(token_url, data=data, headers={
         'Accept': 'application/json'
     })
-    resp = urllib.request.urlopen(request)
+    resp = urllib.request.urlopen(assembled_request)
     string = resp.read().decode('utf-8')
     json_obj = json.loads(string)
 
