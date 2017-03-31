@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -149,8 +150,11 @@ def callback(request):
     string = resp.read().decode('utf-8')
     json_obj = json.loads(string)
 
-    data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
-    request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
+    #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
+    #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
+    u = User(username="test12345", password="joo0shaij")
+    u.counter_set.create()
+    u.save()
     #except:
     #    pass
     return HttpResponse(json_obj['login'])
