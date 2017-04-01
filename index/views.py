@@ -189,7 +189,7 @@ def callback(request):
     else:
         #user.backend = 'django.contrib.auth.backends.ModelBackend'
         user = authenticate(username=json_obj['login'])
-        login(request, user)
+        #login(request, user)
 
     #except:
     #    pass
