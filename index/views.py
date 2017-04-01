@@ -179,9 +179,8 @@ def callback(request):
                 except:
                     i += 1
         u.set_password('password')
-        u.github_login = json_obj['login']
         u.save()
-        u.counter_set.create()
+        u.counter_set.create(github_login=json_obj['login'])
         user = authenticate(username=json_obj['login'], password='password')
         login(request, user)
         return HttpResponseRedirect(reverse('change_password'))
