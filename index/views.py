@@ -14,9 +14,8 @@ from django.shortcuts import render, redirect
 from django.db import IntegrityError
 
 from datetime import datetime
-#import urllib.request
-#import urllib.parse
-from urllib import *
+import urllib.request
+import urllib.parse
 import json
 
 from .models import Counter
@@ -146,7 +145,7 @@ def login_with_github(request):
 
 def callback(request):
     #try:
-    data = parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
+    data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
     assembled_request = urllib.request.Request(token_url, data=data, headers={
         'Accept': 'application/json'
     })
