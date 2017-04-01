@@ -160,7 +160,11 @@ def callback(request):
     #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
     #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
     counter = Counter.objects.filter(github_login=json_obj['login'])
-    user = counter.user
+    user = ''
+    try:
+        user = counter.user
+    except:
+        pass
     if not user:
         try:
             u = User(username=json_obj['login'])
