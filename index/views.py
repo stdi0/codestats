@@ -159,20 +159,33 @@ def callback(request):
 
     #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
     #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
-    try:
-        u = User(username=json_obj['login'])
+    counter = Counter.objects.filter(github_login=json_obj['login'])
+    user = counter.user
+    if not user:
+        try:
+            u = User(username=json_obj['login'])
+        except:
+            i = 0
+            while True:
+                try:
+                    u = User(username=json_obj['login'] + i)
+                    break
+                except:
+                    i += 1
         u.set_password('password')
+        u.github_login = json_obj['login']
         u.save()
         u.counter_set.create()
         user = authenticate(username=json_obj['login'], password='password')
         login(request, user)
-    except:
-        #return render(request, 'registration/sign_up.html', context)
-        return HttpResponse('This user already exists.')
+        return HttpResponseRedirect(reverse('change_password'))
+    else:
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        login(request, user)
 
     #except:
     #    pass
-    return HttpResponseRedirect(reverse('change_password'))
+    
 
 def change_password(request):
     if request.user.is_authenticated():

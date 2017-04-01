@@ -10,6 +10,7 @@ class Counter(models.Model):
     #user_id = models.CharField(max_length=30)
     counter_for_all_time = models.IntegerField(default=0)
     counter_for_day = models.IntegerField(default=0)
+    github_login = models.CharField(max_length=30, default='')
 
     def __str__(self):
         return self.user.username
