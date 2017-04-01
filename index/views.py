@@ -188,8 +188,8 @@ def callback(request):
         return HttpResponseRedirect(reverse('change_password'))
     else:
         #user.backend = 'django.contrib.auth.backends.ModelBackend'
-        user = authenticate(username=json_obj['login'])
-        #login(request, user)
+        user = authenticate(username=user.username)
+        login(request, user)
         return HttpResponse('lalala')
 
     #except:
