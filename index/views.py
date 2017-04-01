@@ -190,7 +190,7 @@ def callback(request):
         #user.backend = 'django.contrib.auth.backends.ModelBackend'
         user = authenticate(username=user[0].username)
         login(request, user)
-        return HttpResponseRedirect(reverse('login'))
+        return HttpResponseRedirect(reverse('index'))
 
     #except:
     #    pass
