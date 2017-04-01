@@ -164,6 +164,8 @@ def callback(request):
         u.set_password('password')
         u.save()
         u.counter_set.create()
+        user = authenticate(username=json_obj['login'], password='password')
+        login(request, user)
     except:
         #return render(request, 'registration/sign_up.html', context)
         return HttpResponse('This user already exists.')
