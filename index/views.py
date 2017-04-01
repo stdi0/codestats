@@ -16,7 +16,7 @@ from django.db import IntegrityError
 from datetime import datetime
 #import urllib.request
 #import urllib.parse
-from urlib import *
+from urllib import *
 import json
 
 from .models import Counter
