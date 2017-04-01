@@ -14,8 +14,9 @@ from django.shortcuts import render, redirect
 from django.db import IntegrityError
 
 from datetime import datetime
-import urllib.request
-import urllib.parse
+#import urllib.request
+#import urllib.parse
+from urlib import *
 import json
 
 from .models import Counter
