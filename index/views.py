@@ -123,7 +123,8 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             user.counter_set.create()
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
+            #user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
+            user = authenticate(username=form.cleaned_data['username'])
             login(request, user)
             return HttpResponseRedirect(reverse('counter', args=[user.username]))
     return render(request, 'registration/sign_up.html', {'errors': errors, 'form': form})
@@ -181,11 +182,13 @@ def callback(request):
         u.set_password('password')
         u.save()
         u.counter_set.create(github_login=json_obj['login'])
-        user = authenticate(username=json_obj['login'], password='password')
+        #user = authenticate(username=json_obj['login'], password='password')
+        user = authenticate(username=json_obj['login'])
         login(request, user)
         return HttpResponseRedirect(reverse('change_password'))
     else:
-        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        #user.backend = 'django.contrib.auth.backends.ModelBackend'
+        user = authenticate(username=json_obj['login'])
         login(request, user)
 
     #except:

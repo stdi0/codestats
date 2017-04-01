@@ -105,6 +105,11 @@ ALLOWED_HOSTS = [
     '*',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    # ... your other backends
+    'index.auth_backend.PasswordlessAuthBackend',
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
