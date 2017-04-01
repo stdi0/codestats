@@ -26,16 +26,16 @@
 <form method="post" action="{% url 'sign_up' %}">
 {% csrf_token %}
 
-{{ form.errors }}
-{{ form.non_field_errors }}
-
 <p>{{ form.username.label_tag }}</p>
 <p>{{ form.username }}</p>
+{{ form.username.errors }}
 <p>{{ form.username.help_text }}</p>
 <p>{{ form.password1.label_tag }}</p>
 <p>{{ form.password1 }}</p>
+{{ form.password1.errors }}
 <p>{{ form.password2.label_tag }}</p>
 <p>{{ form.password2 }}</p>
+{{ form.password2.errors }}
 <p>{{ form.password2.help_text }}</p>
 <br>
 <input type="submit" value="Зарегистрироваться" />
