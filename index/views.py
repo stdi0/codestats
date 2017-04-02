@@ -168,14 +168,15 @@ def callback(request):
     
     if request.user.is_authenticated():
         user = request.user
+        qset = User.objects.filter(username=user.username)[0]
         #old_links = User.objects.filter(counter__github_login=json_obj['login'])
         old_counters = Counter.objects.filter(github_login=json_obj['login'])
         #old_links.delete()
         for counter in old_counters:
             counter.github_login = ''
             counter.save()
-        user.counter__github_login = json_obj['login']
-        user.save()
+        qset.counter__github_login = json_obj['login']
+        qset.save()
         #return HttpResponseRedirect(reverse('index'))
         return HttpResponse(user.counter__github_login)
 
