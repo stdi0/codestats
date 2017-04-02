@@ -172,6 +172,7 @@ def callback(request):
         #old_links.delete()
         for link in old_links:
             link.counter__github_login = ''
+            link.save()
         user.counter__github_login = json_obj['login']
         user.save()
         return HttpResponseRedirect(reverse('index'))
