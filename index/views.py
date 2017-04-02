@@ -165,6 +165,15 @@ def callback(request):
     #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
     #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
     #counter = Counter.objects.filter(github_login=json_obj['login'])
+    
+    if request.user.is_authenticated():
+        user = request.user
+        old_links = User.objects.filter(counter__github_login=json_obj['login'])
+        old_links.delete()
+        user.counter__github_login = json_obj['login']
+        user.save()
+        return HttpResponseRedirect(reverse('index'))
+
     user = User.objects.filter(counter__github_login=json_obj['login'])
     #user = ''
     #try:
@@ -195,11 +204,6 @@ def callback(request):
         login(request, user)
         return HttpResponseRedirect(reverse('change_password'))
     else:
-        if request.user.is_authenticated():
-            old_links = User.objects.filter(counter__github_login=json_obj['login'])
-            old_links.delete()
-            user[0].counter__github_login = json_obj['login']
-            user[0].save()
         #user.backend = 'django.contrib.auth.backends.ModelBackend'
         user = authenticate(username=user[0].username)
         login(request, user)
