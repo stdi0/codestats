@@ -202,14 +202,14 @@ def callback(request):
                     i += 1
         u.counter_set.create(github_login=json_obj['login'])
         #user = authenticate(username=json_obj['login'], password='password')
-        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        user[0].backend = 'django.contrib.auth.backends.ModelBackend'
         #user = authenticate(username=json_obj['login'])
-        login(request, user)
+        login(request, user[0])
         return HttpResponseRedirect(reverse('change_password'))
     else:
-        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        user.backend[0] = 'django.contrib.auth.backends.ModelBackend'
         #user = authenticate(username=user[0].username)
-        login(request, user)
+        login(request, user[0])
         return HttpResponseRedirect(reverse('index'))
 
     #except:
