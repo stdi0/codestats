@@ -144,6 +144,10 @@ def login_with_github(request):
     authorization_url = authorization_base_url + '/?client_id=' + client_id
     return HttpResponseRedirect(authorization_url)
 
+def link_github(request):
+    authorization_url = authorization_base_url + '/?client_id=' + client_id
+    return HttpResponseRedirect(authorization_url)
+
 def callback(request):
     #try:
     data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
@@ -187,6 +191,11 @@ def callback(request):
         login(request, user)
         return HttpResponseRedirect(reverse('change_password'))
     else:
+        if request.user.is_authenticated():
+            old_links = User.objects.filter(counter__github_login=json_obj['login'])
+            old_links.delete()
+            user.counter__github_login = json_obj['login']
+            user.save()
         #user.backend = 'django.contrib.auth.backends.ModelBackend'
         user = authenticate(username=user[0].username)
         login(request, user)
@@ -213,6 +222,13 @@ def change_password(request):
             'form': form
         })
     return HttpResponseRedirect(reverse('login'))
+
+def settings(request):
+    if request.user.is_authenticated():
+        context = {}
+        return render(request, 'index/settings.html', context)
+    return HttpResponseRedirect(reverse('login'))
+
 
 
 
