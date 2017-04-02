@@ -172,7 +172,7 @@ def callback(request):
     #    return HttpResponse()
     #except:
     #    pass
-    if not user[0]:
+    if not user:
         try:
             u = User(username=json_obj['login'])
         except:
