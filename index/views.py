@@ -179,7 +179,7 @@ def callback(request):
             u.set_password('password')
             u.save()
         except:
-            i = 0
+            i = 2
             while True:
                 try:
                     username = json_obj['login'] + str(i)
