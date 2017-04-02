@@ -123,8 +123,8 @@ def sign_up(request):
         if form.is_valid():
             user = form.save()
             user.counter_set.create()
-            #user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
-            user = authenticate(username=form.cleaned_data['username'])
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
+            #user = authenticate(username=form.cleaned_data['username'])
             login(request, user)
             return HttpResponseRedirect(reverse('counter', args=[user.username]))
     return render(request, 'registration/sign_up.html', {'errors': errors, 'form': form})
@@ -169,7 +169,9 @@ def callback(request):
     if request.user.is_authenticated():
         user = request.user
         old_links = User.objects.filter(counter__github_login=json_obj['login'])
-        old_links.delete()
+        #old_links.delete()
+        for link in old_links:
+            link.counter__github_login = ''
         user.counter__github_login = json_obj['login']
         user.save()
         return HttpResponseRedirect(reverse('index'))
@@ -200,12 +202,13 @@ def callback(request):
                     i += 1
         u.counter_set.create(github_login=json_obj['login'])
         #user = authenticate(username=json_obj['login'], password='password')
-        user = authenticate(username=json_obj['login'])
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        #user = authenticate(username=json_obj['login'])
         login(request, user)
         return HttpResponseRedirect(reverse('change_password'))
     else:
-        #user.backend = 'django.contrib.auth.backends.ModelBackend'
-        user = authenticate(username=user[0].username)
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        #user = authenticate(username=user[0].username)
         login(request, user)
         return HttpResponseRedirect(reverse('index'))
 

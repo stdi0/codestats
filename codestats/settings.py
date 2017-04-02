@@ -105,10 +105,10 @@ ALLOWED_HOSTS = [
     '*',
 ]
 
-AUTHENTICATION_BACKENDS = (
+#AUTHENTICATION_BACKENDS = (
     # ... your other backends
-    'index.auth_backend.PasswordlessAuthBackend',
-)
+#    'index.auth_backend.PasswordlessAuthBackend',
+#)
 
 
 # Internationalization
