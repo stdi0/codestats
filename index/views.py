@@ -177,7 +177,7 @@ def callback(request):
             counter.save()
         qset.counter__github_login = json_obj['login']
         qset.save()
-        return HttpResponseRedirect(qset.username)
+        return HttpResponse(qset.username + ' - ' + json_obj['login'])
         #return HttpResponse(user.counter__github_login)
 
     user = User.objects.filter(counter__github_login=json_obj['login'])
