@@ -175,16 +175,18 @@ def callback(request):
     if not user:
         try:
             u = User(username=json_obj['login'])
+            u.set_password('password')
+            u.save()
         except:
             i = 0
             while True:
                 try:
                     u = User(username=json_obj['login'] + i)
+                    u.set_password('password')
+                    u.save()
                     break
                 except:
                     i += 1
-        u.set_password('password')
-        u.save()
         u.counter_set.create(github_login=json_obj['login'])
         #user = authenticate(username=json_obj['login'], password='password')
         user = authenticate(username=json_obj['login'])
