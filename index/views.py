@@ -176,7 +176,8 @@ def callback(request):
             counter.save()
         user.counter__github_login = json_obj['login']
         user.save()
-        return HttpResponseRedirect(reverse('index'))
+        #return HttpResponseRedirect(reverse('index'))
+        return HttpResponse(user.counter__github_login)
 
     user = User.objects.filter(counter__github_login=json_obj['login'])
     #user = ''
