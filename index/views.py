@@ -207,7 +207,7 @@ def callback(request):
         login(request, user[0])
         return HttpResponseRedirect(reverse('change_password'))
     else:
-        user.backend[0] = 'django.contrib.auth.backends.ModelBackend'
+        user[0].backend = 'django.contrib.auth.backends.ModelBackend'
         #user = authenticate(username=user[0].username)
         login(request, user[0])
         return HttpResponseRedirect(reverse('index'))
