@@ -167,18 +167,23 @@ def callback(request):
     #counter = Counter.objects.filter(github_login=json_obj['login'])
     
     if request.user.is_authenticated():
-        user = request.user
-        qset = User.objects.filter(username=user.username)[0]
         #old_links = User.objects.filter(counter__github_login=json_obj['login'])
         old_counters = Counter.objects.filter(github_login=json_obj['login'])
         #old_links.delete()
         for counter in old_counters:
             counter.github_login = ''
             counter.save()
-        qset.counter__github_login = json_obj['login']
-        qset.save()
-        return HttpResponse(qset.username + ' - ' + json_obj['login'])
+
+        #user = request.user
+        #qset = User.objects.filter(username=user.username)[0]
+        
+        counter = Counter.objects.filter(user__username=request.user.username)[0]
+
+        counter.github_login = json_obj['login']
+        counter.save()
+        #return HttpResponse(qset.username + ' - ' + json_obj['login'])
         #return HttpResponse(user.counter__github_login)
+        return HttpResponseRedirect(reverse('index'))
 
     user = User.objects.filter(counter__github_login=json_obj['login'])
     #user = ''
