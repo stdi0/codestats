@@ -181,7 +181,7 @@ def callback(request):
             i = 0
             while True:
                 try:
-                    u = User(username=json_obj['login'] + i)
+                    u = User(username=json_obj['login'] + str(i))
                     u.set_password('password')
                     u.save()
                     break
