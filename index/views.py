@@ -198,8 +198,8 @@ def callback(request):
         if request.user.is_authenticated():
             old_links = User.objects.filter(counter__github_login=json_obj['login'])
             old_links.delete()
-            user.counter__github_login = json_obj['login']
-            user.save()
+            user[0].counter__github_login = json_obj['login']
+            user[0].save()
         #user.backend = 'django.contrib.auth.backends.ModelBackend'
         user = authenticate(username=user[0].username)
         login(request, user)
