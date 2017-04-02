@@ -174,14 +174,16 @@ def callback(request):
     #    pass
     if not user:
         try:
-            u = User(username=json_obj['login'])
+            username = json_obj['login']
+            u = User(username=username)
             u.set_password('password')
             u.save()
         except:
             i = 0
             while True:
                 try:
-                    u = User(username=json_obj['login'] + str(i))
+                    username = json_obj['login'] + str(i)
+                    u = User(username=username)
                     u.set_password('password')
                     u.save()
                     break
