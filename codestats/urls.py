@@ -25,7 +25,7 @@ from django.views.static import serve
 
 urlpatterns = [
     #url(r'^', include('index.urls')),
-    url(r'^logout/$', 'django.contrib.auth.views.logout',
+    url(r'^logout/$', auth_views.logout,
                           {'next_page': '/'}),
     url(r'^', include('django.contrib.auth.urls')),
     #url(r'^login/$', auth_views.login, name='login'),
