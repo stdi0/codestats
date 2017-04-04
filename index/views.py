@@ -13,6 +13,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
 
+from django.contrib.auth import logout
+
 from datetime import datetime
 import urllib.request
 import urllib.parse
@@ -105,7 +107,8 @@ def topall(request):
 @csrf_exempt
 def api_call(request, user_name):
     user = authenticate(username=user_name, password=request.POST['password'])
-    if user is not None:
+    count = request.POST['count']
+    if (user is not None) and count < 20:
         counter = get_object_or_404(Counter, user__username=user_name)
         try:
             counter.counter_for_day += int(request.POST['count'])
@@ -249,6 +252,9 @@ def settings(request):
         return render(request, 'index/settings.html', context)
     return HttpResponseRedirect(reverse('login'))
 
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
 
 
