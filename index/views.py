@@ -107,7 +107,8 @@ def topall(request):
 @csrf_exempt
 def api_call(request, user_name):
     user = authenticate(username=user_name, password=request.POST['password'])
-    if user is not None:
+    control = int(request.POST['count'])
+    if (user is not None) and (control < 20):
         counter = get_object_or_404(Counter, user__username=user_name)
         try:
             counter.counter_for_day += int(request.POST['count'])
