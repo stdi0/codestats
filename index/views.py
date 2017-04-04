@@ -127,7 +127,6 @@ def sign_up(request):
             user = form.save()
             user.counter_set.create()
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password2'])
-            #user = authenticate(username=form.cleaned_data['username'])
             login(request, user)
             return HttpResponseRedirect(reverse('counter', args=[user.username]))
     return render(request, 'registration/sign_up.html', {'errors': errors, 'form': form})
@@ -152,7 +151,6 @@ def link_github(request):
     return HttpResponseRedirect(authorization_url)
 
 def callback(request):
-    #try:
     data = urllib.parse.urlencode({'client_id': client_id, 'client_secret': client_secret, 'code': request.GET['code']}).encode()
     assembled_request = urllib.request.Request(token_url, data=data, headers={
         'Accept': 'application/json'
@@ -165,36 +163,20 @@ def callback(request):
     string = resp.read().decode('utf-8')
     json_obj = json.loads(string)
 
-    #data = urllib.parse.urlencode({'username': 'test12345', 'password1': 'joo0shaij', 'password2': 'joo0shaij'}).encode()
-    #request = urllib.request.Request('http://codestats.pythonanywhere.com/sign_up', data=data)
-    #counter = Counter.objects.filter(github_login=json_obj['login'])
-    
     if request.user.is_authenticated():
-        #old_links = User.objects.filter(counter__github_login=json_obj['login'])
         old_counters = Counter.objects.filter(github_login=json_obj['login'])
-        #old_links.delete()
         for counter in old_counters:
             counter.github_login = ''
             counter.save()
-
-        #user = request.user
-        #qset = User.objects.filter(username=user.username)[0]
         
         counter = Counter.objects.filter(user__username=request.user.username)[0]
 
         counter.github_login = json_obj['login']
         counter.save()
-        #return HttpResponse(qset.username + ' - ' + json_obj['login'])
-        #return HttpResponse(user.counter__github_login)
         return HttpResponseRedirect(reverse('index'))
 
     user = User.objects.filter(counter__github_login=json_obj['login'])
-    #user = ''
-    #try:
-    #    user = counter.user
-    #    return HttpResponse()
-    #except:
-    #    pass
+
     if not user:
         try:
             username = json_obj['login']
@@ -213,20 +195,13 @@ def callback(request):
                 except:
                     i += 1
         u.counter_set.create(github_login=json_obj['login'])
-        #user = authenticate(username=json_obj['login'], password='password')
         u.backend = 'django.contrib.auth.backends.ModelBackend'
-        #user = authenticate(username=json_obj['login'])
         login(request, u)
         return HttpResponseRedirect(reverse('change_password'))
     else:
         user[0].backend = 'django.contrib.auth.backends.ModelBackend'
-        #user = authenticate(username=user[0].username)
         login(request, user[0])
         return HttpResponseRedirect(reverse('index'))
-
-    #except:
-    #    pass
-    
 
 def change_password(request):
     if request.user.is_authenticated():
